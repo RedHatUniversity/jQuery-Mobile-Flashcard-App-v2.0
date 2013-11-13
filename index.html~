@@ -1,0 +1,739 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Flashcards</title>
+	<link rel="stylesheet" href="themes/jquery.mobile.theme-1.3.2.css" />
+	<link rel="stylesheet" href="themes/jquery.mobile.structure-1.3.2.css" />
+	<link rel="stylesheet" href="themes/custom.css" />
+	<link rel="stylesheet" href="jquery.mobile.simpledialog.css" /> 
+	<script src="jquery-1.7.1.min.js"></script>
+	<script src="jquery.mobile-1.3.2.min.js"></script>
+	<script src="jquery.mobile.simpledialog2.js"></script>
+
+<style type="text/css">
+/* Sets the Menu button icon */
+.ui-icon-selection {
+	background-image: url('images/selection.png');
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	box-shadow: none;
+	width: 30px;
+	height: 30px;
+	margin-top: -2px !important; /* adjust vertical position (top value is set to 50%) */
+}
+
+/* Sets the Back icon */
+.ui-icon-menu-back {
+	background-image: url('images/back.png');
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	box-shadow: none;
+	width: 24px;
+	height: 24px;
+	margin-top: 1px !important; /* adjust vertical position (top value is set to 50%) */
+}
+
+
+/* Sets the Thumbs-Up icon */
+.ui-icon-thumbsup {
+	background-image: url('images/thumbs-up.png');
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	box-shadow: none;
+	width: 40px;
+	height: 40px;
+	margin-top: 0px !important; /* adjust vertical position (top value is set to 50%) */
+	}
+
+/* Sets the Thumbs-Down icon */
+.ui-icon-thumbsdown {
+	background-image: url('images/thumbs-down.png');
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	box-shadow: none;
+	width: 40px;
+	height: 40px;
+	margin-top: 0px !important; /* adjust vertical position (top value is set to 50%) */
+
+}
+
+/* Sets the Study List icon */
+.ui-icon-studylist {
+	background-image: url('images/study_list.png');
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	box-shadow: none;
+	width: 26px;
+	height: 26px;
+	margin-top: 0px !important; /* adjust vertical position (top value is set to 50%) */
+
+}
+
+/* Sets the Flashcard Count icon */
+.ui-icon-flashcard {
+	background-image: url('images/card.png');
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	box-shadow: none;
+	width: 26px;
+	height: 26px;
+	margin-top: 0px !important; /* adjust vertical position (top value is set to 50%) */
+
+}
+
+/* Sets the Switch Answers icon */
+.ui-icon-switch {
+	background-image: url('images/switch.png');
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	box-shadow: none;
+	width: 26px;
+	height: 26px;
+	margin-top: 0px !important; /* adjust vertical position (top value is set to 50%) */
+
+}
+
+/* Sets the Plus icon */
+.ui-icon-plus2 {
+	background-image: url('images/plus_icon.png');
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	box-shadow: none;
+	width: 26px;
+	height: 26px;
+	margin-top: -11px !important; /* adjust vertical position (top value is set to 50%) */
+
+}
+
+/* Sets the Minus icon */
+.ui-icon-minus2 {
+	background-image: url('images/minus_icon.png');
+	background-color: transparent;
+	box-shadow: none;
+	border: none;
+	box-shadow: none;
+	width: 26px;
+	height: 26px;
+	margin-top: -11px !important; /* adjust vertical position (top value is set to 50%) */
+
+}
+
+/* Position settings for background of Thumbs-Up and Thumbs-Down icons */
+.thumbs-ui-icon {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 55px;
+	vertical-align: middle;
+	width: 100%;
+}
+
+/* Position settings for background of Back icon */
+.back-ui-icon {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 29px;
+	vertical-align: middle;
+	width: 32px;
+}
+
+/* Position settings for background of Menu icon */
+.me-ui-icon {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 29px;
+	vertical-align: middle;
+	width: 36px;
+}
+
+/* Menu button border settings */
+.me-ui-btn-corner-all {
+	border-radius: 0.4em 0.4em 0.4em 0.4em;
+}
+
+/* Style settings for Menu button*/
+.me-ui-btn-up-a, .me-ui-btn-hover-a, .me-ui-btn-down-a {
+	background: linear-gradient(#222222, #101010) repeat scroll 0 0 #222222;
+	border: 1px solid #000000;
+	color: #787878;
+	font-weight: bold;
+	text-shadow: 0 -1px 1px #000000;
+}
+
+/* Style settings for Exit button */
+.exit-ui-btn-up-a, .exit-ui-btn-hover-a, .exit-ui-btn-down-a {
+	background: linear-gradient(#222222, #101010) repeat scroll 0 0 #222222;
+	border: 1px solid #000000;
+	color: #ffffff;
+	font-weight: bold;
+	text-shadow: 0 -1px 1px #000000;
+}
+
+/* Style settings for Score "button" */
+.score-ui-btn-up-a, .score-ui-btn-hover-a, .score-ui-btn-down-a  {
+	background: transparent;
+	border: transparent;
+	color: #ffffff;
+	font-weight: bold;
+	text-shadow: 0 -1px 1px #000000;
+}
+
+/* Modifies score button at the bottom to not have a border */
+.score-ui-btn-inner .ui-btn-inner {
+	border-top: none;
+}
+
+/* Sets the "All done" block at the end to wrap around instead of putting "..."*/
+.questionblock-ui-btn-inner .ui-btn-inner {
+	white-space: normal;
+}
+
+/* Sets padding for Thumbs-Up/Thumbs-Down buttons on flashcard screen*/
+.ui-navbar li .ui-btn-icon-top .ui-btn-inner {
+	padding-top: 35px;
+}
+
+/* Position settings for final score page text*/
+.finalScore {
+	width: 50%;
+	margin: 0 auto;
+	text-align:center;
+}
+
+/* Score number settings - Score page */
+#scorenumber {
+	font-size:400%;
+	font-weight:bold;
+}
+
+/* Settings for Total Card Count, Number Correct, and Number Incorrect */
+#totalnum, #numright, #numwrong {
+	font-size: 110%;
+	font-weight:bold;
+}
+
+/* Sets color of number of flashcard marked incorrect */
+#numwrong {
+	color:#ff0000; 
+   
+}
+
+/*Makes background show for full length splash screen (by making transparent)*/
+.splash-ui-content {
+	background:transparent;
+}
+
+/*Makes background show for full length of screen on flashcard screen (by making transparent)*/
+.flashcards-ui-content {
+	background:transparent;
+	margin: 0 0 97px 0;
+}
+
+/*Makes background show for full length of about screen (by making transparent)*/
+.about-ui-content {
+	background:transparent;
+}
+
+/*Makes background show for full length of score screen (by making transparent)*/
+.score-ui-content {
+	background:transparent;
+}
+
+/* Sets background for the tip box header */
+.tip-ui-bar-a{
+	background: #1c1c1c;
+}
+
+/* Settings for tip box header font */
+.tip-ui-title{
+	text-shadow: none;
+}
+</style>
+</head>
+
+<body>
+<script>
+
+//this declaration of variables is only here to test loading the main functions after loading the xml.
+var wordbank = new Array ("");
+var counter = 0;
+//create an array to hold the active vocabulary words in the future
+var currentwords = new Array();
+//create a variable to hold the current card in the future
+var currentcard = "";
+var currentchapter = "";
+//creates a variable to hold whether the answer is showing or hidden
+var answerstate = "";
+var numcorrect = 0;
+var numwrong = 0;
+var wrongwords = new Array();
+var randomcard = "";
+var questionshowing = 1;
+var questionhidden = 2;
+var rawChapterTitles = new Array();
+var uniqueChapterTitles = new Array();
+var showTipBox = 1; //1 if initial opening of the flashcards, 0 otherwise.  Used to determine whether to show tip box.
+	
+function loadInfo(){
+
+//copy a list of the chapter titles
+for (var i=0; i < wordbank.length; i++) {
+	rawChapterTitles[i] = wordbank[i][0];
+}
+//create a function to return the unique values from an array
+function unique(array){
+    return $.grep(array,function(el,index){
+        return index == $.inArray(el,array);
+    });
+}
+//create a new array containing the unique chapter titles
+uniqueChapterTitles = unique(rawChapterTitles);
+
+$("#flashcards").live("pageinit", function() {
+	//sets the current accuracy
+	var accuracy = 100;
+	//empties the list of wrong answers
+	var wronganswers = new Array();
+	$("#right").bind('click', gotright);
+	$("#wrong").bind('click', gotwrong);
+	$("#question1").bind('click', clickquestion1);
+	$("#question2").bind('click', clickquestion2);
+	$("#showanswers").bind('click', switchQandA);
+	$("#reset").bind('click', resetcards);
+});
+
+
+$("#flashcards").live("pagebeforeshow", function() {
+	$('#answer').hide();
+	$('#question2').hide();
+	changecardcount();
+	answerstate = "hidden";
+	loadcard();
+	$("#reset").hide(); //upper right-corner reset button currently disabled
+
+	/* Uses Simple Dialog 2 JQuery plugin. Show an opening help tip box when the app is first run. */
+	if(showTipBox == 1){
+		$('#flashcards').simpledialog2({
+			mode: 'blank',
+			headerText: 'Tips',
+			headerClose: false,
+			blankContent : 
+			"<p style=\"margin: 5% 5% 5% 5%; color:white; text-shadow:none !important;\" class=\"centeredtext\">Tap the button in the middle of the screen to view the definition of the term.  If you guessed correctly, tap the thumbs up button; if not, tap the thumbs down button.</p>"+
+			// NOTE: the use of rel="close" causes this button to close the dialog.
+			"<a rel='close' data-role='button' href='#' style=\"margin: 5% 5% 5% 5%;\">Got it!</a>"
+		});
+		showTipBox = 0;
+	}
+});
+
+$("#menu").live("pagebeforeshow", function() {
+	$("#menu-reset").bind('click', resetcards);
+});
+
+$("#score").live("pagebeforeshow", function() {
+	finalScoreCalc();
+	$("#finalscore-reset").bind('click', resetcards);
+});
+
+
+} // end of loadInfo
+
+function loadcard (){
+	if(currentwords.length >0){
+		randomcard = Math.floor(Math.random() * currentwords.length);
+		$("#questioncontainer").empty();
+    		$('#questioncontainer').append("<a href=\"#\" data-role=\"button\" data-icon=\"plus2\" id=\"question1\" class=\"questionblock-ui-btn-inner\"><h3 class=\"centeredtext\">" + 			currentwords[randomcard][questionshowing] + "</h3></a>");
+		$('#questioncontainer').append("<a href=\"#\" data-role=\"button\" data-icon=\"minus2\" id=\"question2\" class=\"questionblock-ui-btn-inner\"><h3 class=\"centeredtext\">" + 			currentwords[randomcard][questionshowing] + "</h3></a>");
+   		$('#questioncontainer').append("<h3 class=\"centeredtext\" id=\"answer\">"+ currentwords[randomcard][questionhidden] + " </h3>");
+		$('#questioncontainer').trigger('create');
+		$("#question1").bind('click', clickquestion1);
+		$("#question2").bind('click', clickquestion2);
+		$('#answer').hide();
+		$('#question2').hide();
+		currentcard = randomcard;
+		clickquestion2();
+	}
+}
+
+
+function gotright(){
+	if(currentwords.length >1){
+		currentwords.splice(randomcard,1);
+		changecardcount();
+		numcorrect++;
+		changeaccuracy();
+	} else if(currentwords.length ==1 ){
+		currentwords.splice(randomcard,1);
+		changecardcount();
+		numcorrect++;
+		changeaccuracy();
+		$.mobile.navigate( "#score" );
+	}
+	loadcard();
+}
+
+function gotwrong(){
+
+	if(currentwords.length >1){
+		wrongwords.push(currentwords[randomcard]);
+		currentwords.splice(randomcard,1);
+		changecardcount();
+		numwrong++;
+		changeaccuracy();
+	} else if(currentwords.length ==1 ){
+		wrongwords.push(currentwords[randomcard]);
+		currentwords.splice(randomcard,1);
+		changecardcount();
+		numwrong++;
+		changeaccuracy();
+		$.mobile.navigate( "#score" );
+	}
+	loadcard();	
+}
+
+function clickquestion1(){
+	console.log("clickquestion1");
+	$('#answer').show().trigger( 'updatelayout' );
+	$('#question1').hide().trigger( 'updatelayout' );
+	$('#question2').show().trigger( 'updatelayout' );
+	answerstate = "showing";	
+}
+ 
+function clickquestion2(){
+	$('#answer').hide().trigger( 'updatelayout' );
+	$('#question1').show().trigger( 'updatelayout' );
+	$('#question2').hide().trigger( 'updatelayout' );
+	answerstate = "hidden";
+}
+
+function showanswers(){
+	console.log("showanswers");
+}
+
+function changecardcount(){
+	$("#cardcount .ui-btn-text").text(currentwords.length + " Cards");
+}
+
+function changeaccuracy(){
+	accuracy = numcorrect/(numcorrect+numwrong)*100;
+	accuracy = Math.round(accuracy);
+	if(isNaN(accuracy) == true){
+		accuracy = "--";
+	}
+	$("#percentcorrect .ui-btn-text").text(accuracy + "%");
+}
+
+function finalScoreCalc(){
+	$("#scorenumber").text(accuracy + "%");
+	$("#totalnum").text((wordbank.length) + " Total Cards");
+	$("#numwrong").text(numwrong + " Wrong");
+}
+
+function resetcards(){
+	console.log("reset");
+	wrongwords.length = 0;
+	selectwords();
+	$("#questioncontainer").empty();
+    	$('#questioncontainer').append("<a href=\"#\" data-role=\"button\" data-icon=\"plus2\" id=\"question1\" class=\"questionblock-ui-btn-inner\"><h3 class=\"centeredtext\">All done! Click \"Reset\" to try again or \"Study List\" to see which terms you should review </h3></a>");
+	$('#questioncontainer').append("<a href=\"#\" data-role=\"button\" data-icon=\"minus2\" id=\"question2\" class=\"questionblock-ui-btn-inner\"><h3 class=\"centeredtext\">All done! Click \"Reset\" to try again or \"Study List\" to see which terms you should review</h3></a>");
+    	$('#questioncontainer').append("<h3 class=\"centeredtext\" id=\"answer\"> </h3>");
+	$('#flashcards').trigger('create');
+	$("#question1").bind('click', clickquestion1);
+	$("#question2").bind('click', clickquestion2);
+	loadcard();
+	changecardcount();
+	numcorrect = 0;
+	numwrong = 0;
+	changeaccuracy();
+	$("#reset").hide();
+}
+
+//everything that happens when the document loads
+$(document).ready(function()
+    {
+
+////This code is for use with XML input.
+
+	$.get('wordbank.xml', function(d){
+
+		$(d).find('flashcard').each(function(){
+
+		    var $flashcard = $(this);   
+		    var optionChapter = $flashcard.find('section').text();
+		    var optionWord = $flashcard.find('word').text();
+		    var optionDefinition = $flashcard.find('response').text();
+		    wordbank[counter] = new Array(optionChapter, optionWord, optionDefinition, ++counter);
+		});
+
+		
+		loadInfo();
+		chapterselect();
+    	});
+
+        console.log("documentready");
+    }
+);
+
+function chapterselect(){
+	currentchapter = uniqueChapterTitles[0];
+	selectwords();
+	changecardcount();
+	resetcards();
+	console.log("changing chapter heading to " + currentchapter);
+	$("#flashcardheader").text(currentchapter);
+}
+
+function selectwords(){
+	currentwords.length = 0;
+	for (var i=0; i < wordbank.length; i++) {
+		if(currentchapter == wordbank[i][0]){
+			currentwords[currentwords.length] = wordbank[i];
+		}
+ 	}
+	for (var i=0; i < currentwords.length; i++) {
+		console.log(currentwords[i][1]);
+	}
+}
+
+$("#studylist").live("pagebeforeshow", function() {
+	$('#wordsyoumissed').empty();
+	for (var i = 0; i < wrongwords.length; i++){
+		$("#wordsyoumissed").append("<li> <h3 class=\"lefttext\">" + wrongwords[i][1] + "</h3><p class=\"lefttext\">" + wrongwords[i][2] + "</p><!--p class=\"ui-li-aside\"><strong>" + wrongwords[i][3] + "</strong></p--></li>")
+		$("#wordsyoumissed").listview('refresh');
+	}
+	$('#allthewords').empty();	
+	for (var i = 0; i < currentwords.length; i++){
+		$("#allthewords").append("<li> <h3 class=\"lefttext\">" + currentwords[i][1] + "</h3><p class=\"lefttext\">" + currentwords[i][2] + "</p><!--p class=\"ui-li-aside\"><strong>" + currentwords[i][3] + "</strong></p--></li>")
+		$("#allthewords").listview('refresh');
+	}
+});
+
+function switchQandA(){
+	if (questionshowing == 2){
+		questionshowing = 1;
+		questionhidden = 2;
+	} else {
+		questionshowing = 2;
+		questionhidden = 1;	
+	}
+	console.log(questionshowing + "is the state of questionshowing");
+	$("#questioncontainer").empty();
+	$('#questioncontainer').append("<a href=\"#\" data-role=\"button\" data-icon=\"plus2\" id=\"question1\" class=\"questionblock-ui-btn-inner\"><h3 class=\"centeredtext\">" + currentwords[randomcard][questionshowing] + "</h3></a>");
+	$('#questioncontainer').append("<a href=\"#\" data-role=\"button\" data-icon=\"minus2\" id=\"question2\" class=\"questionblock-ui-btn-inner\"><h3 class=\"centeredtext\">" + currentwords[randomcard][questionshowing] + "</h3></a>");
+    	$('#questioncontainer').append("<h3 class=\"centeredtext\" id=\"answer\">"+ currentwords[randomcard][questionhidden] + " </h3>");
+	$('#questioncontainer').trigger('create');
+	$("#question1").bind('click', clickquestion1);
+	$("#question2").bind('click', clickquestion2);
+	$('#answer').hide();
+	$('#answer').trigger('updatelayout');
+	$('#question2').hide();
+	$('#question2').trigger('updatelayout');
+}
+
+
+</script>	
+
+<!-- Splash Screen -->
+	<div data-role="page" id="intro" data-theme="a">
+		<div data-role="content" data-theme="a" class="splash-ui-content">
+			<img id="logo" src="images/card_icon.png" width="50%" height="50%" style="display:block; margin-top:10%; margin-left:auto; margin-right:auto; margin-bottom: 10%; max-width:300px;"/>
+                	<h1 class="centeredtext" style="text-shadow:0 -1px 0 #000000;">Flashcards App</h1>
+			<h4 class="centeredtext" style="margin-top:-20px;">Version 2.0</h4>
+			<a href="#flashcards" data-role="button" data-theme="e" style="margin-top:40px;">Click Here to Begin</a>
+			<a href="javascript:window.close();" data-role="button">Return to RHU Mobile</a>
+		</div>
+	</div> 
+<!-- end of Splash Screen -->        
+        
+        
+<!-- Study List Screen-->        
+	<div data-role="page" id="studylist" data-theme="a">
+		<div data-role="header">
+			<a href="#" data-role="button" data-rel="back" style="margin-left:5px;" data-iconpos="notext" data-icon="menu-back" data-iconshadow="false" data-corners="false" class="back-ui-icon me-ui-btn-corner-all me-ui-btn-up-a .me-ui-btn-hover-a .me-ui-btn-down-a">Back</a>
+			<h1>Study List</h1>
+		</div><!-- /header -->
+
+		<div class="whitebar">
+                </div>
+                <div class="redbar">
+                </div>
+                <div class="whitebar">
+                </div>
+
+		<div data-role="content" data-theme="a">	
+			<div class="content-primary">	
+        			<h3>Words you Missed:</h3>
+				<ul data-role="listview" data-inset="true" id="wordsyoumissed">
+				</ul>
+        			<h3>Word List:</h3>
+        			<ul data-role="listview" data-inset="true" id="allthewords">
+				</ul>
+			</div><!--/content-primary -->	
+		</div><!-- /content -->
+	</div><!-- /end of Study List Screen -->
+		
+        
+<!-- Active Flashcard Screen -->
+        <div data-role="page" id="flashcards" data-theme="a">
+		<div data-role="header">
+			<a href="#menu" data-role="button" style="margin-left:5px;" data-iconpos="notext" data-icon="selection" data-iconshadow="false" data-corners="false" class="me-ui-icon me-ui-btn-corner-all me-ui-btn-up-a .me-ui-btn-hover-a .me-ui-btn-down-a" data-transition="slide">Menu</a>
+			<h1 id="flashcardheader">Chapter</h1>
+			<a href="#" id="reset" data-role="button" data-iconshadow="false" data-corners="false" class="ui-btn-right me-ui-btn-corner-all exit-ui-btn-up-a exit-ui-btn-hover-a exit-ui-btn-down-a">Reset</a>
+    		</div><!-- /header -->
+		<div class="whitebar">
+                </div>
+                <div class="redbar">
+                </div>
+                <div class="whitebar">
+                </div>
+                <div data-role="navbar">
+			<ul>
+				<li><a href="#" data-icon="switch" id="showanswers">Switch Answers</a></li>
+				<li><a href="#" data-icon="flashcard" id="cardcount">X Cards</a></li>
+				<li><a href="#studylist" data-icon="studylist" id="studylistbutton">Study List</a></li>
+			</ul>
+                </div>			
+           	<div data-role="content" data-theme="a" class="flashcards-ui-content">	
+                	<div class="content-primary" id="questioncontainer">	
+                		<a href="#" data-role="button" data-icon="plus2" id="question1" class="questionblock-ui-btn-inner"><h3 class="centeredtext">All done! Click "Reset" to try again or "Study List" to see which terms you should review </h3></a>
+				<a href="#" data-role="button" data-icon="minus2" id="question2" class="questionblock-ui-btn-inner"><h3 class="centeredtext">All done! Click "Reset" to try again or "Study List" to see which terms you should review</h3></a>
+                    		<h3 class="centeredtext" id="answer"> </h3>
+                   	</div><!--/content-primary -->	
+            	</div><!-- /content -->
+		<div data-role="footer" data-id="foo1" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#" data-icon="thumbsdown" id="wrong" data-iconpos="notext" class="thumbs-ui-icon"></a></li>
+					<li><a href="#"  data-icon="thumbsup" id="right" data-iconpos="notext" class="thumbs-ui-icon"></a></li>
+				</ul>
+			</div><!-- /navbar -->
+			<div data-role="footer">
+				<a href="#" data-icon="check" data-role="button" data-shadow="false" class="ui-btn-left score-ui-btn-up-a score-ui-btn-hover-a score-ui-btn-down-a score-ui-btn-inner" id="percentcorrect">--%</a>
+				<h1></h1>
+				<a href="javascript:window.close();" data-role="button" data-iconshadow="false" data-corners="false" class="ui-btn-right me-ui-btn-corner-all exit-ui-btn-up-a exit-ui-btn-hover-a exit-ui-btn-down-a" style="border-top: none;">Exit</a>
+				</div>
+			</div><!-- /footer -->
+		</div><!-- /end of Active Flashcard Screen -->
+
+<!-- Instructions Page -->
+        <div data-role="page" id="instructions" data-theme="a" data-add-back-btn="true">
+		<div data-role="header">
+			<a href="#" data-role="button" data-rel="back" style="margin-left:5px;" data-iconpos="notext" data-icon="menu-back" data-iconshadow="false" data-corners="false" class="back-ui-icon me-ui-btn-corner-all me-ui-btn-up-a .me-ui-btn-hover-a .me-ui-btn-down-a">Back</a>
+			<h1>Help</h1>
+		</div>
+
+		<div class="whitebar">
+                </div>
+                <div class="redbar">
+                </div>
+                <div class="whitebar">
+                </div>
+
+            	<div data-role="content" data-theme="a">
+		        <h2>How to Use</h2>
+
+			<p>Tap the button in the middle of the screen to view the definition of the term.  If you guessed correctly, 
+			tap the thumbs up button; if not, tap the thumbs down button.</p>
+
+			<h2>Main Screen Components</h2>
+		
+			<p style="margin-bottom:30px;"><img src="images/switch.png"/><br><b>Switch Answers</b><br> Changes whether the term or definition is shown first. (Default: term) </p>
+			<p style="margin-bottom:30px;"><img src="images/card.png"/><br><b>Number of Cards</b><br> Indicates number of cards left to be reviewed.</p>
+			<p style="margin-bottom:30px;"><img src="images/study_list.png"/><br><b>Study List</b><br> Navigates to a page consisting of two components: a list of words marked as wrong (via thumbs down) by the user, and a list of remaining
+			terms that have not yet been reviewed.</p>
+			<p style="margin-bottom:30px;"><img src="images/plus_icon.png"/><img src="images/minus_icon.png" style="padding-right: 7px;"/><br><b>Flashcard</b><br> Front of card is denoted by a plus sign. Tap the card to expand to the other side of the card, marked by a minus sign. Tap again to collapse the card.</p>
+			<p style="margin-bottom:30px;"><img src="images/thumbs-up.png" style="padding-right: 5px;" width="26px" height="26px"/><img src="images/thumbs-down.png" width="26px" height="26px"/><br><b>Thumbs Up/Thumbs Down</b><br> Indicates whether the term was guessed correctly (thumbs up) or incorrectly (thumbs down).</p>
+			<p style="margin-bottom:30px;"><img src="images/score.png"/><br><b>Score</b><br> Indicates the percentage of flashcards that have been marked as correct thus far in the deck.</p>
+			<p style="margin-bottom:30px;"><b>Exit</b><br> Returns to the main RHU Mobile app.</p>
+		</div>
+
+	</div> <!--end of Instructions Screen-->
+
+<!-- Menu Screen -->
+        <div data-role="page" id="menu" data-theme="a">
+		<div data-role="header">
+			<a href="#" data-role="button" data-rel="back" style="margin-left:5px;" data-iconpos="notext" data-icon="menu-back" data-iconshadow="false" data-corners="false" class="back-ui-icon me-ui-btn-corner-all me-ui-btn-up-a .me-ui-btn-hover-a .me-ui-btn-down-a">Back</a>
+			<h1>Options</h1>
+		</div>
+		
+		<div class="whitebar">
+                </div>
+                <div class="redbar">
+                </div>
+                <div class="whitebar">
+                </div>
+
+		<div data-role="content" data-theme="a">
+			<ul data-role="listview">
+				<li><a href="#flashcards" id="menu-reset">Reset Deck</a></li>
+				<li><a href="#instructions">Help</a></li>
+				<li><a href="#about">About</a></li>
+				<li><a href="javascript:window.close();">Exit</a></li>
+			</ul>
+		</div>
+	</div> <!-- end of Menu Screen -->
+
+<!-- Score Page -->
+        <div data-role="page" id="score" data-theme="a">
+		<div data-role="header">
+			<a href="#menu" data-role="button" style="margin-left:5px;" data-iconpos="notext" data-icon="selection" data-iconshadow="false" data-corners="false" class="me-ui-icon me-ui-btn-corner-all me-ui-btn-up-a .me-ui-btn-hover-a .me-ui-btn-down-a" data-transition="slide">Menu</a>
+			<h1>Your Score</h1>
+		</div>
+
+		<div class="whitebar">
+                </div>
+                <div class="redbar">
+                </div>
+                <div class="whitebar">
+                </div>
+
+		<div data-role="content" data-theme="a" class="score-ui-content">
+			<div class="finalScore">
+				<div id="scorenumber">--%</div>
+				<hr style="width:60%;">
+				<div id="totalnum">-- Total Cards</div>
+				<div id="numwrong">-- Wrong</div>
+			</div>
+			<a href="#studylist" data-role="button" style="margin-top: 10%;">Review Study List</a>
+			<a href="#flashcards" id="finalscore-reset" data-role="button">Reset Deck</a>
+			<a href="javascript:window.close();" data-role="button">Exit Flashcards</a>
+		</div>
+	</div> <!-- end of Score Screen -->
+
+<!-- About Screen -->
+        <div data-role="page" id="about" data-theme="a" data-add-back-btn="true">
+		<div data-role="header">
+			<a href="#" data-role="button" data-rel="back" style="margin-left:5px;" data-iconpos="notext" data-icon="menu-back" data-iconshadow="false" data-corners="false" class="back-ui-icon me-ui-btn-corner-all me-ui-btn-up-a .me-ui-btn-hover-a .me-ui-btn-down-a">Back</a>
+			<h1>About</h1>
+		</div>
+		
+		<div class="whitebar">
+                </div>
+                <div class="redbar">
+                </div>
+                <div class="whitebar">
+                </div>
+
+		<div data-role="content" data-theme="a" class="about-ui-content">
+			<img src="images/card_icon.png" height="38%" width="38%" style="display:block; margin-top:auto; margin-left:auto; margin-right:auto; margin-bottom:auto;"/>
+			<h2 class="centeredtext">jQuery Mobile Flashcards App v2.0</h2>
+			<p class="centeredtext">This is an open source project originally developed by <a href="https://github.com/RedHatUniversity/jQuery-Mobile-Flashcard-App-v1.0/blob/master/README.md" style="text-decoration:none;">Ryan Hansen</a> and enhanced by Red Hat University (via <a href="https://github.com/bkjeffer" target="_new" style="text-decoration:none;">@bkjeffer</a>).</p>
+			<p class="centeredtext">Source code for this project and others can be found in the Red Hat University repository on <a href="https://github.com/RedHatUniversity" target="_new" style="text-decoration:none;">GitHub</a>.</p>
+		</div>
+	</div> <!--end of About Screen-->
+
+</body>
+</html>
