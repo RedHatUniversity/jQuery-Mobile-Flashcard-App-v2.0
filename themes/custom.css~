@@ -1,0 +1,25 @@
+.centeredtext{
+	text-align:center;
+	white-space:normal !important;
+} .lefttext{
+	text-align:left;
+	white-space:normal !important;
+}.whitebar {
+	background-color: #FFF;
+	margin: 0px;
+	padding: 0px;
+	float: none;
+	height: 1px;
+	width: 100%;
+} .redbar {
+	/*background-color: #c1272d;*/
+	background-color: #b20000;
+	margin: 0px;
+	padding: 0px;
+	float: none;
+	height: 5px;
+	width: 100%;
+}
+#answer {
+	margin-bottom: 20px;
+}
